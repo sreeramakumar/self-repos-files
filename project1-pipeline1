@@ -35,7 +35,12 @@ pipeline{
                 sh " docker push sreeramakumar/project1:${VERSION} "
             }
         }
-        stage('Setting the variables values') {
+        stage('docker image delete'){
+            steps{
+                sh "docker image rmi sreeramakumar/project1:${VERSION}"
+            }
+        }
+        stage('terraform ec2 creation test_server') {
            steps {
                sh '''
                  terraform destroy -auto-approve
