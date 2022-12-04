@@ -58,6 +58,8 @@ pipeline{
 }
 stage('ansible install docker on test server for selinium tests'){
             steps{
+                sh "ansible -i /opt/ansible/inventory/aws_ec2.yaml -m ping"
+                sh "sleep 20"
                 sh " ansible-playbook -i /opt/ansible/inventory/aws_ec2.yaml dockerinstall.yaml "
             }
         }
