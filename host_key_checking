@@ -20,7 +20,7 @@ in playbook
     (...)
     
     
-    sh "ansible -i /opt/ansible/inventory/aws_ec2.yaml -m ping"
+ansible -i /opt/ansible/inventory/aws_ec2.yaml -m ping --private-key=ec2.pem
 
 ansible-inventory -i  aws_ec2.yaml --list
 
