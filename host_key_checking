@@ -26,6 +26,32 @@ ansible -i /opt/ansible/inventory/aws_ec2.yaml -m ping --private-key=ec2.pem --b
 
 ansible-inventory -i  aws_ec2.yaml --list
 
+"all": {
+        "children": [
+            "aws_ec2",
+            "ungrouped"
+        ]
+    },
+    "aws_ec2": {
+        "hosts": [
+            "ec2-13-233-87-59.ap-south-1.compute.amazonaws.com"
+        ]
+    }
+}
+[root@jenkinsserver inventory]# cat aws_ec2.yaml
+---
+plugin: aws_ec2
+
+
+regions:
+  - ap-south-1
+filters:
+
+  tag:Env: test
+[root@jenkinsserver inventory]# pwd
+/opt/ansible/inventory
+
+
 ---
 plugin: aws_ec2
 
