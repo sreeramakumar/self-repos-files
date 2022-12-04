@@ -1,0 +1,23 @@
+You can do it either in the /etc/ansible/ansible.cfg or ~/.ansible.cfg file:
+
+[defaults]
+host_key_checking = False
+
+
+Or you can setup and env variable (this might not work on newer ansible versions):
+
+export ANSIBLE_HOST_KEY_CHECKING=False
+
+in playbook
+
+- hosts: sites
+  user: root
+  tags:
+    - configuration
+  gather_facts: no
+  tasks:
+    - setup:
+    (...)
+    
+    
+    sh "ansible -i /opt/ansible/inventory/aws_ec2.yaml -m ping"
