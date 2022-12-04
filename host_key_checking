@@ -61,3 +61,9 @@ regions:
 filters:
 
   tag:Env: test
+  
+  
+  sh " ansible-playbook aws_ec2 -i /opt/ansible/inventory/aws_ec2.yaml --private-key=/opt/ansible/ec2.pem dockerinstall.yaml "
+  
+  vi ec2.pem
+  copied sripem content and chmod 400 ec2.pem
