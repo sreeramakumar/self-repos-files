@@ -1,0 +1,60 @@
+pipeline{
+    agent any
+    tools {
+  maven 'maven3'
+  dockerTool 'docker3'
+  terraform 'terraform3'
+}
+  environment {
+     VERSION = "${env.BUILD_ID}"
+}
+    stages{
+        stage('scm'){
+            steps{
+                git 'https://github.com/sreeramakumar/project1.git'
+            }
+        }
+        stage('maven build'){
+            steps{
+                sh "mvn clean package"
+            }
+        }
+        stage('docker image build'){
+            steps{
+                sh "docker build . -t sreeramakumar/project1:${VERSION}"
+            }
+        }
+        stage('docker image push to docker hub'){
+            steps{
+                sh " docker login -u sreeramakumar -p Dmur_int2"
+                sh " docker push sreeramakumar/project1:${VERSION} "
+            }
+        }
+        stage('Setting the variables values') {
+           steps {
+               sh '''
+                 terraform destroy
+                 sleep 300
+                 rm -rf .terraform
+                 rm -rf .terraform.lock.hcl
+                 rm -rf terraform.tfstate
+                 sleep 60
+                 terraform init
+                 terraform plan
+                 terraform apply -auto-approve
+                '''
+    }
+}
+stage('ansible install docker on test server for selinium tests'){
+            steps{
+                sh " ansible-playbook -i /opt/ansible/inventory/aws_ec2.yaml dockerinstall.yaml "
+            }
+        }
+    }
+    
+}
+ def getVersion(){
+    def commithash = sh returnStdout: true, script: 'git rev-parse origin/new_local_branch_unix_timestamp'
+    return commithash
+} 
+
