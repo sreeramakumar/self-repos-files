@@ -21,3 +21,15 @@ in playbook
     
     
     sh "ansible -i /opt/ansible/inventory/aws_ec2.yaml -m ping"
+
+ansible-inventory -i  aws_ec2.yaml --list
+
+---
+plugin: aws_ec2
+
+
+regions:
+  - ap-south-1
+filters:
+
+  tag:Env: test
