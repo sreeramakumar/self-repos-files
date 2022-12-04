@@ -19,6 +19,11 @@ pipeline{
                 sh "mvn clean package"
             }
         }
+        stage('docker images delete'){
+            steps{
+                sh " docker image ls -q | xargs -I {} docker image rm -f {} "
+            }
+        }
         stage('docker image build'){
             steps{
                 sh "docker build . -t sreeramakumar/project1:${VERSION}"
@@ -54,8 +59,9 @@ stage('ansible install docker on test server for selinium tests'){
     }
     
 }
+ 
  def getVersion(){
     def commithash = sh returnStdout: true, script: 'git rev-parse origin/new_local_branch_unix_timestamp'
     return commithash
 } 
-
+docker image ls -q | xargs -I {} docker image rm -f {}
