@@ -11,7 +11,7 @@ pipeline{
     stages{
         stage('scm'){
             steps{
-                git 'https://github.com/sreeramakumar/project1.git'
+                git ''
             }
         }
         stage('maven build'){
@@ -26,7 +26,7 @@ pipeline{
         }
         stage('docker image push to docker hub'){
             steps{
-                sh " docker login -u sreeramakumar -p Dmur_int2"
+                sh " docker login -u username -p password"
                 sh " docker push sreeramakumar/project1:${VERSION} "
             }
         }
