@@ -72,3 +72,15 @@ stage('ansible install docker on test server for selinium tests'){
     return commithash
 } 
 docker image ls -q | xargs -I {} docker image rm -f {}
+
+
+stage('ansible install docker on test server for selinium tests'){
+            steps{
+                sh "chmod 400 ec2.pem"
+                sh "sleep 10"
+                sh "ansible all -i aws_ec2.yaml -m ping --private-key=ec2.pem -u ec2-user"
+                sh " ansible-playbook aws_ec2 -i aws_ec2.yaml --private-key=ec2.pem dockerinstall.yaml "
+            }
+        }
+        
+put all aws_ec2.yaml and ec2.pem in git hub project1
