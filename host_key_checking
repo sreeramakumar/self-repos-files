@@ -19,7 +19,9 @@ in playbook
     - setup:
     (...)
     
-    
+ 
+ansible all -i /opt/ansible/inventory/aws_ec2.yaml -m ping --private-key=/opt/ansible/ec2.pem -u ec2-user
+ 
 ansible -i /opt/ansible/inventory/aws_ec2.yaml -m ping --private-key=ec2.pem --become
 
 ansible-inventory -i  aws_ec2.yaml --list
