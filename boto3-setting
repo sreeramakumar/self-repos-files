@@ -1,0 +1,31 @@
+[root@jenkinsserver example]# cat /opt/ansible/inventory/aws_ec2.yaml
+---
+plugin: aws_ec2
+
+
+regions:
+  - ap-south-1
+filters:
+
+  tag:Env: test
+[root@jenkinsserver example]# cat /etc/ansible/
+ansible.cfg  hosts        roles/
+[root@jenkinsserver example]# cat /etc/ansible/ansible.cfg
+# config file for ansible -- https://ansible.com/
+# ===============================================
+
+# nearly all parameters can be overridden in ansible-playbook
+# or with command line flags. ansible will read ANSIBLE_CONFIG,
+# ansible.cfg in the current working directory, .ansible.cfg in
+# the home directory or /etc/ansible/ansible.cfg, whichever it
+# finds first
+
+[defaults]
+
+host_key_checking = False
+# some basic default values...
+inventory       = /opt/ansible/inventory/aws_ec2.yaml
+#inventory      = /etc/ansible/hosts
+#library        = /usr/share/my_modules/
+#module_utils   = /usr/share/my_module_utils/
+#remote_tmp     = ~/.ansible/tmp
